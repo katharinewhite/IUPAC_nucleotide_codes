@@ -1,7 +1,7 @@
 # IUPAC_nucleotide_codes
 A simple HTML page with Javascript to determine all possible sequences represented by IUPAC nucleotide codes. To use, download a zipped version of the repository, extract the contents and run main.html using a web browser.
 
-You will then be able to enter a sequence using IUPAC nucleotide codes, click "Calculate!" and all possible sequences using just the bases A,C,G and T will be displayed according the the table below:
+You will then be able to enter a sequence using IUPAC nucleotide codes, and all possible sequences using just the bases A,C,G and T will be displayed according the the table below:
 
 | IUPAC nucleotide code | Base |
 | --- | --- |
