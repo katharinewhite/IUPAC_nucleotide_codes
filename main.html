@@ -2,13 +2,12 @@
     <body>
         <div>
             <input id ="input">
-            <button id="calculate">Calculate!</button>
         </div>
         <div>
             <label id = "output"></label>
         </div>        
         <script type="text/javascript">
-            document.getElementById("calculate").onclick = function(){
+            document.getElementById("input").oninput = function(){
                 var inputString = document.getElementById("input").value;
                 var sequences = [inputString];
                 sequences = updateSequencesAtGivenIndeces(sequences,getIndices(inputString,["R","Y","S","W","K","M"]),2);
