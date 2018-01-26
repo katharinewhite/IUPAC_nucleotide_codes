@@ -10,25 +10,61 @@
         <script type="text/javascript">
             document.getElementById("calculate").onclick = function(){
                 var inputString = document.getElementById("input").value;
-                var variableIndices = [];
+                var binaryVariableIndices = [];
+                var ternaryVariableIndices = [];
+                var quarternaryVariableIndices = [];
                 for (i in inputString){
                     if (["R","Y","S","W","K","M"].indexOf(inputString[i]) > -1){
-                        variableIndices[variableIndices.length] = i;
+                        binaryVariableIndices[binaryVariableIndices.length] = i;
+                    }
+                    else if (["B","D","H","V"].indexOf(inputString[i]) > -1){
+                        ternaryVariableIndices[ternaryVariableIndices.length] = i;
+                    }
+                    else if (inputString[i] === "N"){
+                        quarternaryVariableIndices[quarternaryVariableIndices.length] = i;
                     }
                 }
                 var sequences = [];
-                if (variableIndices.length > 0){
-                    for (j = 0; j < 2**(variableIndices.length); j++){
+                if (binaryVariableIndices.length > 0){
+                    for (j = 0; j < 2**(binaryVariableIndices.length); j++){
                         var sequence = inputString;
-                        permutation = j.toString(2).padStart(variableIndices.length,"0");
-                        for (k=0; k<variableIndices.length; k++){
-                            sequence = sequence.replace(sequence[variableIndices[k]],replaceNucleotide(sequence[variableIndices[k]],permutation[k]));
+                        permutation = j.toString(2).padStart(binaryVariableIndices.length,"0");
+                        for (k=0; k<binaryVariableIndices.length; k++){
+                            sequence = sequence.replace(sequence[binaryVariableIndices[k]],replaceNucleotide(sequence[binaryVariableIndices[k]],permutation[k]));
                         }
                         sequences[sequences.length] = sequence;
                     }
                 }
                 else {
                     sequences[0] = inputString;
+                }
+                if (ternaryVariableIndices.length > 0){
+                    var updatedSequences = [];
+                    for (l = 0; l < sequences.length; l++){
+                        for (m = 0; m < 3**(ternaryVariableIndices.length); m++){
+                            var newSequence = sequences[l];
+                            permutation = m.toString(3).padStart(ternaryVariableIndices.length,"0");
+                            for (n=0; n<ternaryVariableIndices.length; n++){
+                                newSequence = newSequence.replace(newSequence[ternaryVariableIndices[n]],replaceNucleotide(newSequence[ternaryVariableIndices[n]],permutation[n]))
+                            }
+                            updatedSequences[updatedSequences.length] = newSequence;
+                        }
+                    }
+                    sequences = updatedSequences;
+                }
+                if (quarternaryVariableIndices.length > 0){
+                    var updatedSequences = [];
+                    for (l = 0; l < sequences.length; l++){
+                        for (m = 0; m < 4**(quarternaryVariableIndices.length); m++){
+                            var newSequence = sequences[l];
+                            permutation = m.toString(4).padStart(quarternaryVariableIndices.length,"0");
+                            for (n=0; n<quarternaryVariableIndices.length; n++){
+                                newSequence = newSequence.replace(newSequence[quarternaryVariableIndices[n]],replaceNucleotide(newSequence[quarternaryVariableIndices[n]],permutation[n]))
+                            }
+                            updatedSequences[updatedSequences.length] = newSequence;
+                        }
+                    }
+                    sequences = updatedSequences;
                 }
                 document.getElementById("output").innerHTML = sequences.join("<br>");
             }
@@ -40,7 +76,12 @@
                     case "S": return (option == "0" ? "G" : "C") 
                     case "W": return (option == "0" ? "A" : "T") 
                     case "K": return (option == "0" ? "G" : "T")     
-                    case "M": return (option == "0" ? "A" : "C")         
+                    case "M": return (option == "0" ? "A" : "C")
+                    case "B": return (option == "0" ? "C" : (option == "1" ? "G" : "T"))  
+                    case "D": return (option == "0" ? "A" : (option == "1" ? "G" : "T")) 
+                    case "H": return (option == "0" ? "A" : (option == "1" ? "C" : "T")) 
+                    case "V": return (option == "0" ? "A" : (option == "1" ? "C" : "G"))         
+                    case "N": return (option == "0" ? "A" : (option == "1" ? "C" : (option == "2" ? "G" : "T"))) 
                 }
             }
 
